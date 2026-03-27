@@ -1,15 +1,20 @@
 import discord
 from discord.ext import commands
-from datetime import datetime
 
-# Set the prefix for commands
-bot = commands.Bot(command_prefix='!')
+# Bot setup
+intents = discord.Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix='!', intents=intents)
+
+# Load cogs
+cogs = ['cog1', 'cog2', 'cog3']  # replace with actual cog names
+for cog in cogs:
+    bot.load_extension(cog)
 
 @bot.event
 async def on_ready():
-    current_time = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
-    print(f'Bot is ready! Current Date and Time (UTC): {current_time}')
-    print(f'Current User's Login: {bot.user.name}')
+    print(f'Logged in as {bot.user} (ID: {bot.user.id})')
+    print('------')
 
-# Token will be added later
-# bot.run('YOUR_TOKEN_HERE')
+# Start the bot
+bot.run('YOUR_TOKEN')
